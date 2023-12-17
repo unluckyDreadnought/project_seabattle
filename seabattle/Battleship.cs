@@ -24,7 +24,6 @@ namespace ships
         public override byte ReducePossibleCount(byte c = 1)
         {
             this.possibleCount -= c;
-            base.ReducePossibleCount(c);
             return base.ReducePossibleCount(c);
         }
     }

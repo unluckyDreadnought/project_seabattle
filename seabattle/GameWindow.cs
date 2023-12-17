@@ -38,13 +38,15 @@ namespace seabattle
 
         public GameWindow()
         {            
-            gamecontrols field = new gamecontrols();
             InitializeComponent();
-            field.CreateBattleField(ref user_field);
         }
 
         private void GameWindow_Load(object sender, EventArgs e)
         {
+            gamecontrols field = new gamecontrols();
+            field.CreateBattleField(ref user_field);
+            field.CreateBattleField(ref attack_field);
+
             int Y = 387;
 
             boat1 = new Battleboat(ships, 4);
@@ -82,25 +84,22 @@ namespace seabattle
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            Control ctrl = sender as Control;
-            if (captured == null)
+            if (boat1.possibleCount != 0)
             {
-                captured = ctrl;
-            }
-            else if (captured == ctrl)
-            {
-                if (dragging && ctrl != null)
+                Control ctrl = sender as Control;
+                if (captured == null)
                 {
-                    ctrl.Location = new Point(ctrl.Left + e.X - xPos, ctrl.Top + e.Y - yPos);
+                    captured = ctrl;
                 }
-                ctrl.Visible = true;
+                else if (captured == ctrl)
+                {
+                    if (dragging && ctrl != null)
+                    {
+                        ctrl.Location = new Point(ctrl.Left + e.X - xPos, ctrl.Top + e.Y - yPos);
+                    }
+                    ctrl.Visible = true;
+                }
             }
-        }
-
-        private void user_field_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            cellOverMouse[0] = e.RowIndex;
-            cellOverMouse[1] = e.ColumnIndex;
         }
 
         // picture 2
@@ -117,18 +116,21 @@ namespace seabattle
 
         private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
         {
-            Control ctrl = sender as Control;
-            if (captured == null)
+            if (cruiser1.possibleCount != 0)
             {
-                captured = ctrl;
-            }
-            else if (captured == ctrl)
-            {
-                if (dragging && ctrl != null)
+                Control ctrl = sender as Control;
+                if (captured == null)
                 {
-                    ctrl.Location = new Point(ctrl.Left + e.X - xPos, ctrl.Top + e.Y - yPos);
+                    captured = ctrl;
                 }
-                ctrl.Visible = true;
+                else if (captured == ctrl)
+                {
+                    if (dragging && ctrl != null)
+                    {
+                        ctrl.Location = new Point(ctrl.Left + e.X - xPos, ctrl.Top + e.Y - yPos);
+                    }
+                    ctrl.Visible = true;
+                }
             }
         }
 
@@ -146,18 +148,21 @@ namespace seabattle
 
         private void pictureBox3_MouseMove(object sender, MouseEventArgs e)
         {
-            Control ctrl = sender as Control;
-            if (captured == null)
+            if (dreadno1.possibleCount != 0)
             {
-                captured = ctrl;
-            }
-            else if (captured == ctrl)
-            {
-                if (dragging && ctrl != null)
+                Control ctrl = sender as Control;
+                if (captured == null)
                 {
-                    ctrl.Location = new Point(ctrl.Left + e.X - xPos, ctrl.Top + e.Y - yPos);
+                    captured = ctrl;
                 }
-                ctrl.Visible = true;
+                else if (captured == ctrl)
+                {
+                    if (dragging && ctrl != null)
+                    {
+                        ctrl.Location = new Point(ctrl.Left + e.X - xPos, ctrl.Top + e.Y - yPos);
+                    }
+                    ctrl.Visible = true;
+                }
             }
         }
 
@@ -194,65 +199,140 @@ namespace seabattle
         }
 
 
-        
+        private void user_field_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            cellOverMouse[0] = e.RowIndex;
+            cellOverMouse[1] = e.ColumnIndex;
+        }
 
         private void user_field_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (dragging && captured != null)
             {
                 Bitmap bmp = new Bitmap((captured as PictureBox).Image);
-                bool[] b = new bool[4];
                 actions act = new actions();
 
                 if (act.CompareBitmaps(bmp, boat1.bmp))
                 {
-                    user_field.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = bmp;
-                    captured.Location = new Point(boat1.controlX, 387);
+                    if (!act.IsShipsCrossed(ref user_field, e.ColumnIndex, e.RowIndex, boat1.health, rotate))
+                    {
+                        if (boat1.possibleCount != 0)
+                        {
+                            try
+                            {
+                                user_field.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = bmp;
+
+                                ships.possibleCount = boat1.ReducePossibleCount();
+                                boat_n.Text = boat1.possibleCount.ToString();
+                            }
+                            catch (ArgumentOutOfRangeException ex)
+                            {
+                                MessageBox.Show("Невозможно поместить корабль здесь ввиду нехватки места. Попробуйте ещё раз.",
+                                    "Капитан, у нас проблемы!", MessageBoxButtons.OK);
+                            }
+
+                            captured.Location = new Point(boat1.controlX, 387);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Невозможно поместить корабль здесь ввиду пересечения с другими кораблями.\n" +
+                            "Измените клетку размещения.", "Капитан, у нас проблемы", MessageBoxButtons.OK);
+                    }
                 }
                 else if (act.CompareBitmaps(bmp, cruiser1.bmp) || act.CompareBitmaps(bmp, cruiser1.rotate))
                 {
-                    if (!act.PlaceShipBlock(ref user_field, e.ColumnIndex, e.RowIndex, cruiser1.health, rotate))
-                    {
-                        MessageBox.Show("Невозможно поместить корабль здесь ввиду нехватки места. Попробуйте ещё раз.", 
-                            "Капитан, у нас проблемы!", MessageBoxButtons.OK);
+                    if (!act.IsShipsCrossed(ref user_field, e.ColumnIndex, e.RowIndex, cruiser1.health, rotate)) {
+                        if (cruiser1.possibleCount != 0)
+                        {
+                            if (!act.PlaceShipBlock(ref user_field, e.ColumnIndex, e.RowIndex, cruiser1.health, rotate))
+                            {
+                                MessageBox.Show("Невозможно поместить корабль здесь ввиду нехватки места. Попробуйте ещё раз.",
+                                    "Капитан, у нас проблемы!", MessageBoxButtons.OK);
+                            }
+                            else
+                            {
+                                ships.possibleCount = cruiser1.ReducePossibleCount();
+                                cruiser_n.Text = cruiser1.possibleCount.ToString();
+                            }
+                            (captured as PictureBox).Image = cruiser1.rotate;
+                            captured.Size = new Size(62, 32);
+                            captured.Location = new Point(cruiser1.controlX, 387);
+                        }
                     }
-                    
-                    (captured as PictureBox).Image = cruiser1.rotate;
-                    captured.Size = new Size(62, 32);
-                    captured.Location = new Point(cruiser1.controlX, 387);
+                    else
+                    {
+                        MessageBox.Show("Невозможно поместить корабль здесь ввиду пересечения с другими кораблями.\n" +
+                            "Измените клетку размещения.", "Капитан, у нас проблемы", MessageBoxButtons.OK);
+                        (captured as PictureBox).Image = cruiser1.rotate;
+                        captured.Size = new Size(62, 32);
+                        captured.Location = new Point(cruiser1.controlX, 387);
+                    }
                 }
                 else if (act.CompareBitmaps(bmp, dreadno1.bmp) || act.CompareBitmaps(bmp, dreadno1.rotate))
                 {
-                    if (!act.PlaceShipBlock(ref user_field, e.ColumnIndex, e.RowIndex, dreadno1.health, rotate))
+                    if (!act.IsShipsCrossed(ref user_field, e.ColumnIndex, e.RowIndex, dreadno1.health, rotate))
                     {
-                        MessageBox.Show("Невозможно поместить корабль здесь ввиду нехватки места. Попробуйте ещё раз.",
-                            "Капитан, у нас проблемы!", MessageBoxButtons.OK);
+                        if (dreadno1.possibleCount != 0)
+                        {
+                            if (!act.PlaceShipBlock(ref user_field, e.ColumnIndex, e.RowIndex, dreadno1.health, rotate))
+                            {
+                                MessageBox.Show("Невозможно поместить корабль здесь ввиду нехватки места. Попробуйте ещё раз.",
+                                    "Капитан, у нас проблемы!", MessageBoxButtons.OK);
+                            }
+                            else
+                            {
+                                ships.possibleCount = dreadno1.ReducePossibleCount();
+                                dreadno_n.Text = dreadno1.possibleCount.ToString();
+                            }
+                            (captured as PictureBox).Image = dreadno1.rotate;
+                            captured.Size = new Size(92, 32);
+                            captured.Location = new Point(dreadno1.controlX, 387);
+                        }
                     }
-                    
-                    (captured as PictureBox).Image = dreadno1.rotate;
-                    captured.Size = new Size(92, 32);
-                    captured.Location = new Point(dreadno1.controlX, 387);
+                    else
+                    {
+                        MessageBox.Show("Невозможно поместить корабль здесь ввиду пересечения с другими кораблями.\n" +
+                            "Измените клетку размещения.", "Капитан, у нас проблемы", MessageBoxButtons.OK);
+                        (captured as PictureBox).Image = dreadno1.rotate;
+                        captured.Size = new Size(92, 32);
+                        captured.Location = new Point(dreadno1.controlX, 387);
+                    }
                 }
                 else if (act.CompareBitmaps(bmp, btlship1.bmp) || act.CompareBitmaps(bmp, btlship1.rotate))
                 {
-                    if (btlship1.possibleCount != 0)
+                    if (!act.IsShipsCrossed(ref user_field, e.ColumnIndex, e.RowIndex, btlship1.health, rotate))
                     {
-                        if (!act.PlaceShipBlock(ref user_field, e.ColumnIndex, e.RowIndex, btlship1.health, rotate))
+                        if (btlship1.possibleCount != 0)
                         {
-                            MessageBox.Show("Невозможно поместить корабль здесь ввиду нехватки места. Попробуйте ещё раз.",
-                                "Капитан, у нас проблемы!", MessageBoxButtons.OK);
+                            if (!act.PlaceShipBlock(ref user_field, e.ColumnIndex, e.RowIndex, btlship1.health, rotate))
+                            {
+                                MessageBox.Show("Невозможно поместить корабль здесь ввиду нехватки места. Попробуйте ещё раз.",
+                                    "Капитан, у нас проблемы!", MessageBoxButtons.OK);
+                            }
+                            else
+                            {
+                                ships.possibleCount = btlship1.ReducePossibleCount();
+                                btlship_n.Text = btlship1.possibleCount.ToString();
+                            }
+                            (captured as PictureBox).Image = btlship1.rotate;
+                            captured.Size = new Size(122, 32);
+                            captured.Location = new Point(btlship1.controlX, 387);
                         }
-
-                        btlship1.ReducePossibleCount();
-                        btlship_n.Text = btlship1.possibleCount.ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Невозможно поместить корабль здесь ввиду пересечения с другими кораблями.\n" +
+                            "Измените клетку размещения.", "Капитан, у нас проблемы", MessageBoxButtons.OK);
                         (captured as PictureBox).Image = btlship1.rotate;
                         captured.Size = new Size(122, 32);
                         captured.Location = new Point(btlship1.controlX, 387);
                     }
                 }
-
+                
+                ships.GetPossibleToSetCount();
                 //user_field.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = bmp;
-
+                rotate = 1;
                 captured = null;
                 dragging = false;
             }
@@ -320,46 +400,52 @@ namespace seabattle
 
         public void RotateShip(Control picture)
         {
-            Bitmap old = new Bitmap((picture as PictureBox).Image);
-            actions act = new actions();
+            if (picture != null && dragging != false)
+            {
+                Bitmap old = new Bitmap((picture as PictureBox).Image);
+                actions act = new actions();
 
-            if (act.CompareBitmaps(old, cruiser1.bmp))
-            {
-                (picture as PictureBox).Image = cruiser1.rotate;
-                picture.Size = new Size(62, 32);
-                rotate = 1;
+                if (act.CompareBitmaps(old, cruiser1.bmp))
+                {
+                    (picture as PictureBox).Image = cruiser1.rotate;
+                    picture.Size = new Size(62, 32);
+                    rotate = 1;
+                }
+                else if (act.CompareBitmaps(old, cruiser1.rotate))
+                {
+                    (picture as PictureBox).Image = cruiser1.bmp;
+                    picture.Size = new Size(32, 62);
+                    rotate = 0;
+                }
+                else if (act.CompareBitmaps(old, dreadno1.bmp))
+                {
+                    (picture as PictureBox).Image = dreadno1.rotate;
+                    picture.Size = new Size(92, 32);
+                    rotate = 1;
+                }
+                else if (act.CompareBitmaps(old, dreadno1.rotate))
+                {
+                    (picture as PictureBox).Image = dreadno1.bmp;
+                    picture.Size = new Size(32, 92);
+                    rotate = 0;
+                }
+                else if (act.CompareBitmaps(old, btlship1.bmp))
+                {
+                    (picture as PictureBox).Image = btlship1.rotate;
+                    picture.Size = new Size(122, 32);
+                    rotate = 1;
+                }
+                else if (act.CompareBitmaps(old, btlship1.rotate))
+                {
+                    (picture as PictureBox).Image = btlship1.bmp;
+                    picture.Size = new Size(32, 122);
+                    rotate = 0;
+                }
             }
-            else if (act.CompareBitmaps(old, cruiser1.rotate))
+            else
             {
-                (picture as PictureBox).Image = cruiser1.bmp;
-                picture.Size = new Size(32, 62);
-                rotate = 0;
+                MessageBox.Show("Выберете корабль для поворота", "Капитан, у нас проблемы", MessageBoxButtons.OK);
             }
-            else if (act.CompareBitmaps(old, dreadno1.bmp))
-            {
-                (picture as PictureBox).Image = dreadno1.rotate;
-                picture.Size = new Size(92, 32);
-                rotate = 1;
-            }
-            else if (act.CompareBitmaps(old, dreadno1.rotate))
-            {
-                (picture as PictureBox).Image = dreadno1.bmp;
-                picture.Size = new Size(32, 92);
-                rotate = 0;
-            }
-            else if (act.CompareBitmaps(old, btlship1.bmp))
-            {
-                (picture as PictureBox).Image = btlship1.rotate;
-                picture.Size = new Size(122, 32);
-                rotate = 1;
-            }
-            else if (act.CompareBitmaps(old, btlship1.rotate))
-            {
-                (picture as PictureBox).Image = btlship1.bmp;
-                picture.Size = new Size(32, 122);
-                rotate = 0;
-            }
-            
         }
         
     }

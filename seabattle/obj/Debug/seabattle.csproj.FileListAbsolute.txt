@@ -19,3 +19,14 @@ F:\практические работы\practice\seabattle\obj\Debug\seabattle.
 F:\практические работы\practice\seabattle\obj\Debug\seabattle.csproj.CoreCompileInputs.cache
 F:\практические работы\practice\seabattle\obj\Debug\seabattle.exe
 F:\практические работы\practice\seabattle\obj\Debug\seabattle.pdb
+D:\project_seabattle\seabattle\bin\Debug\seabattle.exe.config
+D:\project_seabattle\seabattle\bin\Debug\seabattle.exe
+D:\project_seabattle\seabattle\bin\Debug\seabattle.pdb
+D:\project_seabattle\seabattle\obj\Debug\seabattle.csproj.AssemblyReference.cache
+D:\project_seabattle\seabattle\obj\Debug\seabattle.csproj.SuggestedBindingRedirects.cache
+D:\project_seabattle\seabattle\obj\Debug\seabattle.GameWindow.resources
+D:\project_seabattle\seabattle\obj\Debug\seabattle.Properties.Resources.resources
+D:\project_seabattle\seabattle\obj\Debug\seabattle.csproj.GenerateResource.cache
+D:\project_seabattle\seabattle\obj\Debug\seabattle.csproj.CoreCompileInputs.cache
+D:\project_seabattle\seabattle\obj\Debug\seabattle.exe
+D:\project_seabattle\seabattle\obj\Debug\seabattle.pdb

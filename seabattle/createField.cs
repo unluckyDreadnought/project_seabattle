@@ -11,11 +11,9 @@ namespace seabattle
 {
     public class gamecontrols
     {
-        
-        
         public void CreateBattleField(ref DataGridView field)
         {
-            string ABC = "АБВГДЕЖЗИК";
+            //string ABC = "АБВГДЕЖЗИК";
             field.ColumnCount = 10;
             field.RowCount = 10;
             
@@ -23,6 +21,8 @@ namespace seabattle
             {
                 field.Columns[cntr].Width = 32;
                 field.Rows[cntr].Height = 32;
+                //field.Rows[cntr].HeaderCell.Value = ABC[cntr].ToString();
+                //field.Rows[cntr].HeaderCell
             }
 
             //  this.dataGridViewImageColumn1.DefaultCellStyle.NullValue = null;

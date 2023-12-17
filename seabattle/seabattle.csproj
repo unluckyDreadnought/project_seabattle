@@ -117,5 +117,8 @@
   <ItemGroup>
     <None Include="images\rotate.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="images\exterminate_block.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

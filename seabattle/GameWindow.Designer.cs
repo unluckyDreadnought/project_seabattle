@@ -29,10 +29,10 @@ namespace seabattle
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameWindow));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.user_field = new System.Windows.Forms.DataGridView();
             this.c0 = new System.Windows.Forms.DataGridViewImageColumn();
@@ -45,7 +45,6 @@ namespace seabattle
             this.c7 = new System.Windows.Forms.DataGridViewImageColumn();
             this.c8 = new System.Windows.Forms.DataGridViewImageColumn();
             this.c9 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.list = new System.Windows.Forms.ImageList(this.components);
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -55,19 +54,32 @@ namespace seabattle
             this.cruiser_n = new System.Windows.Forms.Label();
             this.dreadno_n = new System.Windows.Forms.Label();
             this.btlship_n = new System.Windows.Forms.Label();
+            this.attack_field = new System.Windows.Forms.DataGridView();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn3 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn4 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn5 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn6 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn7 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn8 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn9 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn10 = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.user_field)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.attack_field)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(106, 358);
+            this.label1.Location = new System.Drawing.Point(242, 549);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(531, 23);
+            this.label1.Size = new System.Drawing.Size(105, 35);
             this.label1.TabIndex = 2;
             this.label1.Text = "Ships";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -79,14 +91,14 @@ namespace seabattle
             this.user_field.AllowUserToDeleteRows = false;
             this.user_field.AllowUserToResizeRows = false;
             this.user_field.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.user_field.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.user_field.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.user_field.ColumnHeadersHeight = 30;
             this.user_field.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.user_field.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -101,25 +113,27 @@ namespace seabattle
             this.c8,
             this.c9});
             this.user_field.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.user_field.Location = new System.Drawing.Point(461, 2);
+            this.user_field.Location = new System.Drawing.Point(45, 3);
+            this.user_field.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.user_field.MultiSelect = false;
             this.user_field.Name = "user_field";
             this.user_field.ReadOnly = true;
             this.user_field.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.user_field.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.user_field.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.user_field.RowHeadersWidth = 30;
             this.user_field.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.user_field.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.user_field.ShowCellErrors = false;
             this.user_field.ShowCellToolTips = false;
             this.user_field.ShowEditingIcon = false;
             this.user_field.ShowRowErrors = false;
-            this.user_field.Size = new System.Drawing.Size(350, 350);
+            this.user_field.Size = new System.Drawing.Size(525, 538);
             this.user_field.TabIndex = 0;
             this.user_field.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.user_field_CellMouseClick);
             this.user_field.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.user_field_CellMouseEnter);
@@ -244,21 +258,13 @@ namespace seabattle
             this.c9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.c9.Width = 30;
             // 
-            // list
-            // 
-            this.list.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("list.ImageStream")));
-            this.list.TransparentColor = System.Drawing.Color.Transparent;
-            this.list.Images.SetKeyName(0, "battleboat.png");
-            this.list.Images.SetKeyName(1, "cruiser.png");
-            this.list.Images.SetKeyName(2, "dreadnought.png");
-            this.list.Images.SetKeyName(3, "battleship.png");
-            // 
             // pictureBox2
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(69, 387);
+            this.pictureBox2.Location = new System.Drawing.Point(104, 597);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(62, 32);
+            this.pictureBox2.Size = new System.Drawing.Size(92, 48);
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseDown);
@@ -267,9 +273,10 @@ namespace seabattle
             // pictureBox4
             // 
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox4.Location = new System.Drawing.Point(286, 387);
+            this.pictureBox4.Location = new System.Drawing.Point(429, 597);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(122, 32);
+            this.pictureBox4.Size = new System.Drawing.Size(182, 48);
             this.pictureBox4.TabIndex = 6;
             this.pictureBox4.TabStop = false;
             this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseDown);
@@ -279,9 +286,10 @@ namespace seabattle
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 387);
+            this.pictureBox1.Location = new System.Drawing.Point(18, 597);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox1.Size = new System.Drawing.Size(47, 48);
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
@@ -290,9 +298,10 @@ namespace seabattle
             // pictureBox3
             // 
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox3.Location = new System.Drawing.Point(162, 387);
+            this.pictureBox3.Location = new System.Drawing.Point(243, 597);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(92, 32);
+            this.pictureBox3.Size = new System.Drawing.Size(137, 48);
             this.pictureBox3.TabIndex = 5;
             this.pictureBox3.TabStop = false;
             this.pictureBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseDown);
@@ -301,9 +310,10 @@ namespace seabattle
             // button1
             // 
             this.button1.Image = global::seabattle.Properties.Resources.rotate;
-            this.button1.Location = new System.Drawing.Point(398, 317);
+            this.button1.Location = new System.Drawing.Point(614, 487);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(35, 35);
+            this.button1.Size = new System.Drawing.Size(52, 54);
             this.button1.TabIndex = 7;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -312,9 +322,10 @@ namespace seabattle
             // 
             this.boat_n.AutoSize = true;
             this.boat_n.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.boat_n.Location = new System.Drawing.Point(27, 422);
+            this.boat_n.Location = new System.Drawing.Point(40, 651);
+            this.boat_n.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.boat_n.Name = "boat_n";
-            this.boat_n.Size = new System.Drawing.Size(29, 16);
+            this.boat_n.Size = new System.Drawing.Size(47, 25);
             this.boat_n.TabIndex = 11;
             this.boat_n.Text = "<n>";
             // 
@@ -322,9 +333,10 @@ namespace seabattle
             // 
             this.cruiser_n.AutoSize = true;
             this.cruiser_n.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cruiser_n.Location = new System.Drawing.Point(118, 422);
+            this.cruiser_n.Location = new System.Drawing.Point(177, 651);
+            this.cruiser_n.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.cruiser_n.Name = "cruiser_n";
-            this.cruiser_n.Size = new System.Drawing.Size(29, 16);
+            this.cruiser_n.Size = new System.Drawing.Size(47, 25);
             this.cruiser_n.TabIndex = 12;
             this.cruiser_n.Text = "<n>";
             // 
@@ -332,9 +344,10 @@ namespace seabattle
             // 
             this.dreadno_n.AutoSize = true;
             this.dreadno_n.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dreadno_n.Location = new System.Drawing.Point(238, 422);
+            this.dreadno_n.Location = new System.Drawing.Point(357, 651);
+            this.dreadno_n.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.dreadno_n.Name = "dreadno_n";
-            this.dreadno_n.Size = new System.Drawing.Size(29, 16);
+            this.dreadno_n.Size = new System.Drawing.Size(47, 25);
             this.dreadno_n.TabIndex = 13;
             this.dreadno_n.Text = "<n>";
             // 
@@ -342,17 +355,191 @@ namespace seabattle
             // 
             this.btlship_n.AutoSize = true;
             this.btlship_n.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btlship_n.Location = new System.Drawing.Point(395, 422);
+            this.btlship_n.Location = new System.Drawing.Point(592, 651);
+            this.btlship_n.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.btlship_n.Name = "btlship_n";
-            this.btlship_n.Size = new System.Drawing.Size(29, 16);
+            this.btlship_n.Size = new System.Drawing.Size(47, 25);
             this.btlship_n.TabIndex = 14;
             this.btlship_n.Text = "<n>";
             // 
+            // attack_field
+            // 
+            this.attack_field.AllowDrop = true;
+            this.attack_field.AllowUserToAddRows = false;
+            this.attack_field.AllowUserToDeleteRows = false;
+            this.attack_field.AllowUserToResizeRows = false;
+            this.attack_field.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.attack_field.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            this.attack_field.ColumnHeadersHeight = 30;
+            this.attack_field.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.attack_field.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewImageColumn1,
+            this.dataGridViewImageColumn2,
+            this.dataGridViewImageColumn3,
+            this.dataGridViewImageColumn4,
+            this.dataGridViewImageColumn5,
+            this.dataGridViewImageColumn6,
+            this.dataGridViewImageColumn7,
+            this.dataGridViewImageColumn8,
+            this.dataGridViewImageColumn9,
+            this.dataGridViewImageColumn10});
+            this.attack_field.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.attack_field.Location = new System.Drawing.Point(709, 3);
+            this.attack_field.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.attack_field.MultiSelect = false;
+            this.attack_field.Name = "attack_field";
+            this.attack_field.ReadOnly = true;
+            this.attack_field.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.attack_field.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.attack_field.RowHeadersWidth = 30;
+            this.attack_field.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.attack_field.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.attack_field.ShowCellErrors = false;
+            this.attack_field.ShowCellToolTips = false;
+            this.attack_field.ShowEditingIcon = false;
+            this.attack_field.ShowRowErrors = false;
+            this.attack_field.Size = new System.Drawing.Size(525, 538);
+            this.attack_field.TabIndex = 15;
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn1.Frozen = true;
+            this.dataGridViewImageColumn1.HeaderText = "1";
+            this.dataGridViewImageColumn1.MinimumWidth = 8;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.ReadOnly = true;
+            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn1.Width = 30;
+            // 
+            // dataGridViewImageColumn2
+            // 
+            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn2.Frozen = true;
+            this.dataGridViewImageColumn2.HeaderText = "2";
+            this.dataGridViewImageColumn2.MinimumWidth = 8;
+            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+            this.dataGridViewImageColumn2.ReadOnly = true;
+            this.dataGridViewImageColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn2.Width = 30;
+            // 
+            // dataGridViewImageColumn3
+            // 
+            this.dataGridViewImageColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn3.Frozen = true;
+            this.dataGridViewImageColumn3.HeaderText = "3";
+            this.dataGridViewImageColumn3.MinimumWidth = 8;
+            this.dataGridViewImageColumn3.Name = "dataGridViewImageColumn3";
+            this.dataGridViewImageColumn3.ReadOnly = true;
+            this.dataGridViewImageColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn3.Width = 30;
+            // 
+            // dataGridViewImageColumn4
+            // 
+            this.dataGridViewImageColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn4.Frozen = true;
+            this.dataGridViewImageColumn4.HeaderText = "4";
+            this.dataGridViewImageColumn4.MinimumWidth = 8;
+            this.dataGridViewImageColumn4.Name = "dataGridViewImageColumn4";
+            this.dataGridViewImageColumn4.ReadOnly = true;
+            this.dataGridViewImageColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn4.Width = 30;
+            // 
+            // dataGridViewImageColumn5
+            // 
+            this.dataGridViewImageColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn5.Frozen = true;
+            this.dataGridViewImageColumn5.HeaderText = "5";
+            this.dataGridViewImageColumn5.MinimumWidth = 8;
+            this.dataGridViewImageColumn5.Name = "dataGridViewImageColumn5";
+            this.dataGridViewImageColumn5.ReadOnly = true;
+            this.dataGridViewImageColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn5.Width = 30;
+            // 
+            // dataGridViewImageColumn6
+            // 
+            this.dataGridViewImageColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn6.Frozen = true;
+            this.dataGridViewImageColumn6.HeaderText = "6";
+            this.dataGridViewImageColumn6.MinimumWidth = 8;
+            this.dataGridViewImageColumn6.Name = "dataGridViewImageColumn6";
+            this.dataGridViewImageColumn6.ReadOnly = true;
+            this.dataGridViewImageColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn6.Width = 30;
+            // 
+            // dataGridViewImageColumn7
+            // 
+            this.dataGridViewImageColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn7.Frozen = true;
+            this.dataGridViewImageColumn7.HeaderText = "7";
+            this.dataGridViewImageColumn7.MinimumWidth = 8;
+            this.dataGridViewImageColumn7.Name = "dataGridViewImageColumn7";
+            this.dataGridViewImageColumn7.ReadOnly = true;
+            this.dataGridViewImageColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn7.Width = 30;
+            // 
+            // dataGridViewImageColumn8
+            // 
+            this.dataGridViewImageColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn8.Frozen = true;
+            this.dataGridViewImageColumn8.HeaderText = "8";
+            this.dataGridViewImageColumn8.MinimumWidth = 8;
+            this.dataGridViewImageColumn8.Name = "dataGridViewImageColumn8";
+            this.dataGridViewImageColumn8.ReadOnly = true;
+            this.dataGridViewImageColumn8.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn8.Width = 30;
+            // 
+            // dataGridViewImageColumn9
+            // 
+            this.dataGridViewImageColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn9.Frozen = true;
+            this.dataGridViewImageColumn9.HeaderText = "9";
+            this.dataGridViewImageColumn9.MinimumWidth = 8;
+            this.dataGridViewImageColumn9.Name = "dataGridViewImageColumn9";
+            this.dataGridViewImageColumn9.ReadOnly = true;
+            this.dataGridViewImageColumn9.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn9.Width = 30;
+            // 
+            // dataGridViewImageColumn10
+            // 
+            this.dataGridViewImageColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn10.Frozen = true;
+            this.dataGridViewImageColumn10.HeaderText = "10";
+            this.dataGridViewImageColumn10.MinimumWidth = 8;
+            this.dataGridViewImageColumn10.Name = "dataGridViewImageColumn10";
+            this.dataGridViewImageColumn10.ReadOnly = true;
+            this.dataGridViewImageColumn10.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewImageColumn10.Width = 30;
+            // 
             // GameWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(856, 456);
+            this.ClientSize = new System.Drawing.Size(1284, 692);
+            this.Controls.Add(this.attack_field);
             this.Controls.Add(this.btlship_n);
             this.Controls.Add(this.dreadno_n);
             this.Controls.Add(this.cruiser_n);
@@ -365,7 +552,9 @@ namespace seabattle
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox3);
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "GameWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.GameWindow_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameWindow_KeyDown);
@@ -374,6 +563,7 @@ namespace seabattle
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.attack_field)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,7 +576,6 @@ namespace seabattle
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.DataGridView user_field;
-        private System.Windows.Forms.ImageList list;
         private System.Windows.Forms.DataGridViewImageColumn c0;
         private System.Windows.Forms.DataGridViewImageColumn c1;
         private System.Windows.Forms.DataGridViewImageColumn c2;
@@ -402,6 +591,17 @@ namespace seabattle
         private System.Windows.Forms.Label cruiser_n;
         private System.Windows.Forms.Label dreadno_n;
         private System.Windows.Forms.Label btlship_n;
+        private System.Windows.Forms.DataGridView attack_field;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn3;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn4;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn5;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn6;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn7;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn8;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn9;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn10;
     }
 }
 

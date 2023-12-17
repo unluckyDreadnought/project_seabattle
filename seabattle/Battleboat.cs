@@ -18,5 +18,11 @@ namespace ships
         {
             instance.AddShip(c);
         }
+
+        public override byte ReducePossibleCount(byte c = 1)
+        {
+            this.possibleCount -= c;
+            return base.ReducePossibleCount(c);
+        }
     }
 }

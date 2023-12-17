@@ -37,45 +37,123 @@ namespace seabattle
         }
 
         // rotation: 0 - top-to-bottom, 1 - left-to-right
-        public bool PlaceShipBlock(ref DataGridView DGV, int y, int x, byte health, byte rotation = 0)
+        public bool PlaceShipBlock(ref DataGridView DGV, int x, int y, byte health, byte rotation = 0)
         {
             byte count = health;
-            if (rotation == 0)
+            try
             {
-                for (int row = x; row < DGV.Columns.Count && count != 0; row++)
+                if (rotation == 0)
                 {
-                    DGV.Rows[row].Cells[y].Value = ship.block;
-                    count--;
-                }
-                if (count != 0)
-                {
-                    for (int row = x; row < DGV.Columns.Count && count <= health; row++)
+                    for (int row = y; row < DGV.Columns.Count && count != 0; row++)
                     {
-                        DGV.Rows[row].Cells[y].Value = null;
-                        count++;
-                    }
-                    return false;
-                }
-            }
-            else
-            {
-                for (int col = y; col < DGV.Rows.Count && count != 0; col++)
-                {
-                    DGV.Rows[x].Cells[col].Value = ship.block;
-                    count--;
-                }
-                if (count != 0)
-                {
-                    for (int col = y; col < DGV.Rows.Count && count <= health; col++)
-                    {
-                        DGV.Rows[x].Cells[col].Value = ship.block;
+                        DGV.Rows[row].Cells[x].Value = ship.block;
                         count--;
                     }
-                    return false;
+                    if (count != 0)
+                    {
+                        for (int row = y; row < DGV.Columns.Count && count <= health; row++)
+                        {
+                            DGV.Rows[row].Cells[x].Value = null;
+                            count++;
+                        }
+                        return false;
+                    }
                 }
+                else
+                {
+                    for (int col = x; col < DGV.Rows.Count && count != 0; col++)
+                    {
+                        DGV.Rows[y].Cells[col].Value = ship.block;
+                        count--;
+                    }
+                    if (count != 0)
+                    {
+                        for (int col = x; col < DGV.Rows.Count && count <= health; col++)
+                        {
+                            DGV.Rows[y].Cells[col].Value = ship.block;
+                            count--;
+                        }
+                        return false;
+                    }
+                }
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return false;
             }
             return true;
         }
 
+        public bool IsShipsCrossed(ref DataGridView DGV, int x, int y, byte health, byte rotation)
+        {
+            bool continued = true;
+            if (rotation == 0)
+            {
+                for (int v = y - 1; continued && v <= y + health; v++)
+                {
+                    next_line0:
+                    for (int h = x - 1; h <= x + 1; h++)
+                    {
+                        next_cell0:
+                        try
+                        {
+                            if (DGV.Rows[v].Cells[h].Value == null) continue;
+                            else
+                            {
+                                continued = false;
+                                break;
+                            }
+                        }
+                        catch (ArgumentOutOfRangeException ex)
+                        {
+                            if (v < 0)
+                            {
+                                v++;
+                                goto next_line0;
+                            }
+                            else if (h < 0)
+                            {
+                                h++;
+                                goto next_cell0;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int v = y - 1; v <= y + 1; v++)
+                {
+                    next_line1:
+                    for (int h = x - 1; continued && h <= x + health; h++)
+                    {
+                    next_cell1:
+                        try
+                        {
+                            if (DGV.Rows[v].Cells[h].Value == null) continue;
+                            else
+                            {
+                                continued = false;
+                                break;
+                            }
+                        }
+                        catch (ArgumentOutOfRangeException ex)
+                        {
+                            if (v < 0)
+                            {
+                                v++;
+                                goto next_line1;
+                            }
+                            else if (h < 0)
+                            {
+                                h++;
+                                goto next_cell1;
+                            }
+                        }
+                    }
+                }
+            }
+            return !continued;
+        }
     }
 }
