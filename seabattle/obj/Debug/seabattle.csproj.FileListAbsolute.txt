@@ -1,0 +1,21 @@
+D:\IS21B\shubin\practice\seabattle\bin\Debug\seabattle.exe.config
+D:\IS21B\shubin\practice\seabattle\bin\Debug\seabattle.exe
+D:\IS21B\shubin\practice\seabattle\bin\Debug\seabattle.pdb
+D:\IS21B\shubin\practice\seabattle\obj\Debug\seabattle.csproj.AssemblyReference.cache
+D:\IS21B\shubin\practice\seabattle\obj\Debug\seabattle.GameWindow.resources
+D:\IS21B\shubin\practice\seabattle\obj\Debug\seabattle.Properties.Resources.resources
+D:\IS21B\shubin\practice\seabattle\obj\Debug\seabattle.csproj.GenerateResource.cache
+D:\IS21B\shubin\practice\seabattle\obj\Debug\seabattle.csproj.CoreCompileInputs.cache
+D:\IS21B\shubin\practice\seabattle\obj\Debug\seabattle.exe
+D:\IS21B\shubin\practice\seabattle\obj\Debug\seabattle.pdb
+F:\практические работы\practice\seabattle\bin\Debug\seabattle.exe.config
+F:\практические работы\practice\seabattle\bin\Debug\seabattle.exe
+F:\практические работы\practice\seabattle\bin\Debug\seabattle.pdb
+F:\практические работы\practice\seabattle\obj\Debug\seabattle.csproj.AssemblyReference.cache
+F:\практические работы\practice\seabattle\obj\Debug\seabattle.csproj.SuggestedBindingRedirects.cache
+F:\практические работы\practice\seabattle\obj\Debug\seabattle.GameWindow.resources
+F:\практические работы\practice\seabattle\obj\Debug\seabattle.Properties.Resources.resources
+F:\практические работы\practice\seabattle\obj\Debug\seabattle.csproj.GenerateResource.cache
+F:\практические работы\practice\seabattle\obj\Debug\seabattle.csproj.CoreCompileInputs.cache
+F:\практические работы\practice\seabattle\obj\Debug\seabattle.exe
+F:\практические работы\practice\seabattle\obj\Debug\seabattle.pdb
