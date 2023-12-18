@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ships;
+using shooting;
 
 namespace seabattle
 {
@@ -18,23 +19,21 @@ namespace seabattle
         Ship ships = new Ship();
         Battleship btlship1 = null;
         Dreadnought dreadno1 = null;
-        //  Dreadnought dreadno2 = null;
         Cruiser cruiser1 = null;
-        //  Cruiser cruiser2 = null;
-        //  Cruiser cruiser3 = null;
         Battleboat boat1 = null;
-        //  Battleboat boat2 = null;
-        //  Battleboat boat3 = null;
-        //  Battleboat boat4 = null;
 
 
         bool dragging = false;
         int xPos = 0, yPos = 0;
         Control captured = null;
         byte rotate = 1;
-
         // 0: row, 1: col
         int[] cellOverMouse = { 0, 0 };
+
+        int[] attackCell = { 0, 0 };
+        Shoot shots = new Shoot();
+        ShootDict shotHist = new ShootDict();
+        
 
         public GameWindow()
         {            
@@ -222,7 +221,7 @@ namespace seabattle
                             {
                                 user_field.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = bmp;
 
-                                ships.possibleCount = boat1.ReducePossibleCount();
+                                boat1.ReducePossibleCount();
                                 boat_n.Text = boat1.possibleCount.ToString();
                             }
                             catch (ArgumentOutOfRangeException ex)
@@ -230,7 +229,7 @@ namespace seabattle
                                 MessageBox.Show("Невозможно поместить корабль здесь ввиду нехватки места. Попробуйте ещё раз.",
                                     "Капитан, у нас проблемы!", MessageBoxButtons.OK);
                             }
-
+                            
                             captured.Location = new Point(boat1.controlX, 387);
                         }
                     }
@@ -238,6 +237,8 @@ namespace seabattle
                     {
                         MessageBox.Show("Невозможно поместить корабль здесь ввиду пересечения с другими кораблями.\n" +
                             "Измените клетку размещения.", "Капитан, у нас проблемы", MessageBoxButtons.OK);
+
+                        captured.Location = new Point(boat1.controlX, 387);
                     }
                 }
                 else if (act.CompareBitmaps(bmp, cruiser1.bmp) || act.CompareBitmaps(bmp, cruiser1.rotate))
@@ -252,7 +253,7 @@ namespace seabattle
                             }
                             else
                             {
-                                ships.possibleCount = cruiser1.ReducePossibleCount();
+                                cruiser1.ReducePossibleCount();
                                 cruiser_n.Text = cruiser1.possibleCount.ToString();
                             }
                             (captured as PictureBox).Image = cruiser1.rotate;
@@ -282,7 +283,7 @@ namespace seabattle
                             }
                             else
                             {
-                                ships.possibleCount = dreadno1.ReducePossibleCount();
+                                dreadno1.ReducePossibleCount();
                                 dreadno_n.Text = dreadno1.possibleCount.ToString();
                             }
                             (captured as PictureBox).Image = dreadno1.rotate;
@@ -312,7 +313,7 @@ namespace seabattle
                             }
                             else
                             {
-                                ships.possibleCount = btlship1.ReducePossibleCount();
+                                btlship1.ReducePossibleCount();
                                 btlship_n.Text = btlship1.possibleCount.ToString();
                             }
                             (captured as PictureBox).Image = btlship1.rotate;
@@ -356,15 +357,39 @@ namespace seabattle
             RotateShip(captured);
         }
 
-        //Dictionary<PictureBox, string> dict = new Dictionary<PictureBox, string>();
+        private void attack_field_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (ships.possibleCount == 0)
+            {
+                try
+                {
+                    attackCell[0] = e.ColumnIndex;
+                    attackCell[1] = e.RowIndex;
+                    if (!shotHist.IsDone(attackCell[0], attackCell[1]))
+                    {
+                        fire.Enabled = true;
+                    }
+                    else
+                    {
+                        fire.Enabled = false;
+                        MessageBox.Show("Капитан, я не думаю, что стрельба в раннее обстреленную точку это логичная идея.", "", MessageBoxButtons.OK);
+                    }
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    MessageBox.Show("Невозможно произвести выстрел в данный участок гавани соперника", "Капитан, у нас проблемы", MessageBoxButtons.OK);
+                    fire.Enabled = false;
+                }
+            }
+        }
 
-        //public void FillListImg()
-        //{
-        //    string path = ".\\..\\..\\images\\";
-        //    dict.Add(pictureBox1, path + "battleboat.png");
-        //    dict.Add(pictureBox2, path + "cruiser.png");
-        //    dict.Add(pictureBox3, path + "dreadnought.png");
-        //}
+        private void fire_Click(object sender, EventArgs e)
+        {
+            if (!shotHist.IsDone(attackCell[0], attackCell[1]))
+            {
+                shots.Fire(ref attack_field, attackCell[0], attackCell[1], ref shotHist);
+            }
+        }
 
         public void FreeTheCapturedObj()
         {

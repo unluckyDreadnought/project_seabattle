@@ -9,6 +9,7 @@ namespace ships
 {
     public class Battleboat : Ship
     {
+        private Ship parent = null; 
         public byte health = 1;
         public Bitmap bmp = new Bitmap(seabattle.Properties.Resources.battleboat);
         public int controlX = 12;
@@ -16,12 +17,14 @@ namespace ships
 
         public Battleboat(Ship instance, byte c = 1)
         {
+            parent = instance;
             instance.AddShip(c);
         }
 
         public override byte ReducePossibleCount(byte c = 1)
         {
             this.possibleCount -= c;
+            parent.possibleCount -= c;
             return base.ReducePossibleCount(c);
         }
     }

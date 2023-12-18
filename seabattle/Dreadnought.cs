@@ -9,6 +9,7 @@ namespace ships
 {
     public class Dreadnought : Ship
     {
+        private Ship parent = null;
         public byte health = 3;
         public Bitmap bmp = new Bitmap(seabattle.Properties.Resources.dreadnought);
         public Bitmap rotate = new Bitmap(seabattle.Properties.Resources.dreadnought_rotate);
@@ -17,12 +18,14 @@ namespace ships
 
         public Dreadnought(Ship instance, byte c = 1)
         {
+            parent = instance;
             instance.AddShip(c);
         }
 
         public override byte ReducePossibleCount(byte c = 1)
         {
             this.possibleCount -= c;
+            parent.possibleCount -= c;
             return base.ReducePossibleCount(c);
         }
     }

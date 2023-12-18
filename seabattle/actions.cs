@@ -70,14 +70,14 @@ namespace seabattle
                     {
                         for (int col = x; col < DGV.Rows.Count && count <= health; col++)
                         {
-                            DGV.Rows[y].Cells[col].Value = ship.block;
-                            count--;
+                            DGV.Rows[y].Cells[col].Value = null;
+                            health--;
                         }
                         return false;
                     }
                 }
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException)
             {
                 return false;
             }
@@ -104,7 +104,7 @@ namespace seabattle
                                 break;
                             }
                         }
-                        catch (ArgumentOutOfRangeException ex)
+                        catch (ArgumentOutOfRangeException)
                         {
                             if (v < 0)
                             {
@@ -137,7 +137,7 @@ namespace seabattle
                                 break;
                             }
                         }
-                        catch (ArgumentOutOfRangeException ex)
+                        catch (ArgumentOutOfRangeException)
                         {
                             if (v < 0)
                             {
