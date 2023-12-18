@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using seabattle;
 using ships;
 using shooting;
 
-namespace seabattle
+namespace bot
 {
     public class Opponent
     {
@@ -17,7 +18,7 @@ namespace seabattle
         private Dreadnought dreadnoughts = null;
         private Battleship battleship = null;
 
-        private OpponentFleet fleetMap = new OpponentFleet();
+        public OpponentFleet fleetMap = new OpponentFleet();
 
         Random rndm = new Random();
 
@@ -31,27 +32,69 @@ namespace seabattle
 
         // 0;0         9;0
         // 0;9         9;9
-        public void PlaceShips()
+        async public Task PlaceShips()
         {
             while (fleet.possibleCount != 0)
             {
-                int shipType = rndm.Next(1, 5);
-                int xStartPos = rndm.Next(0, 10);
-                int yStartPos = rndm.Next(0, 10);
-                while (fleetMap.IsHereShip(xStartPos, yStartPos) != -1)
-                {
-                    xStartPos = rndm.Next(0, 10);
-                    yStartPos = rndm.Next(0, 10);
-                }
+                new_ship:
+                byte shipType = (byte)rndm.Next(1, 5);
+                byte itHp = 0;
 
                 switch (shipType)
                 {
                     case 1:
                         {
-
-                            break;
+                            if (boats.possibleCount != 0)
+                            {
+                                itHp = boats.health;
+                                boats.ReducePossibleCount();
+                                break;
+                            }
+                            else goto new_ship;
+                        }
+                    case 2:
+                        {
+                            if (cruisers.possibleCount != 0)
+                            {
+                                itHp = cruisers.health;
+                                cruisers.ReducePossibleCount();
+                                break;
+                            }
+                            else goto new_ship;
+                        }
+                    case 3:
+                        {
+                            if (dreadnoughts.possibleCount != 0)
+                            {
+                                itHp = dreadnoughts.health;
+                                dreadnoughts.ReducePossibleCount();
+                                break;
+                            }
+                            else goto new_ship;
+                        }
+                    case 4:
+                        {
+                            if (battleship.possibleCount != 0)
+                            {
+                                itHp = battleship.health;
+                                battleship.ReducePossibleCount();
+                                break;
+                            }
+                            else goto new_ship;
                         }
                 }
+
+                int xStartPos = rndm.Next(0, 10);
+                int yStartPos = rndm.Next(0, 10);
+                byte rotate = (byte)rndm.Next(0, 2);
+                
+                while (!(await Task.Run(() => fleetMap.CanPlaceShipHere(xStartPos, yStartPos, itHp, rotate))))
+                {
+                    xStartPos = rndm.Next(0, 10);
+                    yStartPos = rndm.Next(0, 10);
+                }
+
+                await Task.Run(() => fleetMap.Add(fleetMap.Count() + 1, shipType, xStartPos, yStartPos, rotate));
             }
         }
 
@@ -65,57 +108,207 @@ namespace seabattle
                 ship.x = x;
                 ship.y = y;
                 ship.rotate = rotation;
+                this.Add(key, ship);
             }
 
             // if there is ship block in this dot, it returns Dictionary key. Else return -1; not right
             // need to check with it on cross of areas
-            public int IsHereShip(int xPos, int yPos)
+            public bool CanPlaceShipHere(int xPos, int yPos, byte this_health, byte rotate)
             {
-                int key = -1;
-                foreach (KeyValuePair<int, ShipInfo> Entry in this)
+
+                // new version: it did not get any better
+                // - - - - - - - - - - - - - - - - - - - - 
+                //var ships_in_paste_area = from entries in this
+                //                          where entries.Key == - 10
+                //                          select entries; 
+
+                //if (rotate == 1)
+                //{
+                //    ships_in_paste_area = from entries in this
+                //                          where
+                //                          (
+                //                            entries.Value.y >= yPos - 1 &&
+                //                            (entries.Value.x >= xPos - 1 && entries.Value.x <= xPos + this_health)
+                //                          )
+                //                          ||
+                //                          (
+                //                            entries.Value.y == yPos &&
+                //                            (entries.Value.x >= xPos - 1 && entries.Value.x <= xPos + this_health)
+                //                          )
+                //                          ||
+                //                          (
+                //                            entries.Value.y == yPos + 1 &&
+                //                            (entries.Value.x >= xPos - 1 && entries.Value.x <= xPos + this_health)
+                //                          )
+                //                          select entries;
+                //}
+                //else
+                //{
+                //    ships_in_paste_area = from entries in this
+                //                          where
+                //                          (
+                //                            entries.Value.x >= xPos - 1 &&
+                //                            (entries.Value.x >= yPos - 1 && entries.Value.x <= yPos + this_health)
+                //                          )
+                //                          ||
+                //                          (
+                //                            entries.Value.y == xPos &&
+                //                            (entries.Value.x >= yPos - 1 && entries.Value.x <= yPos + this_health)
+                //                          )
+                //                          ||
+                //                          (
+                //                            entries.Value.y == xPos + 1 &&
+                //                            (entries.Value.x >= yPos - 1 && entries.Value.x <= yPos + this_health)
+                //                          )
+                //                          select entries;
+                //}
+                // - - - - - - - - - - - - - - - - - - - - 
+
+
+                var ships_in_paste_area = from entries in this
+                                          where
+
+                                          //(
+                                          ////1
+                                          //  (entries.Value.y >= (yPos - 1) && entries.Value.y <= (yPos + 1) &&
+                                          //  entries.Value.y >= yPos + 1 && entries.Value.y >= yPos + this_health) &&
+                                          //  (entries.Value.x + entries.Value.health - 1 >= (xPos - 1) &&
+                                          //  entries.Value.x + entries.Value.health - 1 <= (xPos + this_health))
+                                          //)
+                                          //||
+                                          //(
+                                          ////0
+                                          //  (entries.Value.y + entries.Value.health - 1 >= (yPos - 1) &&
+                                          //  entries.Value.y + entries.Value.health - 1 <= (yPos + this_health)) &&
+                                          //  (entries.Value.x >= (xPos - 1) && entries.Value.x <= (xPos + 1))
+                                          //)
+                                          //||
+
+
+                                          (
+                                            entries.Value.y == yPos + this_health - 1 || entries.Value.y == yPos + this_health &&
+                                            (entries.Value.x == xPos - 1 || entries.Value.x == xPos || entries.Value.x == xPos + 1)
+                                          )
+                                          ||
+                                          //
+                                          (
+                                            (entries.Value.y >= yPos && entries.Value.y + entries.Value.health - 1 <= yPos + this_health) &&
+                                            (entries.Value.x == yPos - 1 || entries.Value.x == xPos || entries.Value.x == xPos + 1)
+                                          )
+                                          ||
+                                          //
+                                          (
+                                            (entries.Value.x >= xPos && entries.Value.x + entries.Value.health - 1 <= xPos + this_health) &&
+                                            (entries.Value.y == yPos - 1 || entries.Value.y == yPos || entries.Value.y == yPos + 1)
+                                          )
+                                          ||
+                                          //
+                                          (
+                                            (entries.Value.x >= xPos - 1 && entries.Value.x <= xPos + this_health) &&
+                                            (entries.Value.y == yPos - 1 || entries.Value.y == yPos || entries.Value.y == yPos + 1)
+                                          )
+                                          //
+                                          ||
+                                          (
+                                            entries.Value.y == yPos &&
+                                            (entries.Value.x == xPos - 1 || entries.Value.x == xPos || entries.Value.x == xPos + 1)
+                                          )
+                                          ||
+                                          (
+                                            entries.Value.y == yPos - 1 &&
+                                            (entries.Value.x == xPos - 1 || entries.Value.x == xPos || entries.Value.x == xPos + 1)
+                                          )
+                                          ||
+                                          (
+                                            entries.Value.y == yPos + this_health &&
+                                            (entries.Value.x == xPos - 1 || entries.Value.x == xPos || entries.Value.x == xPos + 1)
+                                          )
+                                          ||
+                                          (
+                                            entries.Value.x == xPos - 1 &&
+                                            (entries.Value.y == yPos - 1 || entries.Value.y == yPos || entries.Value.y == yPos + 1)
+                                          )
+                                          ||
+                                          (
+                                            entries.Value.x == xPos &&
+                                            (entries.Value.y == yPos - 1 || entries.Value.y == yPos || entries.Value.y == yPos + 1)
+                                          )
+                                          ||
+                                          (
+                                            entries.Value.x == xPos + this_health &&
+                                            (entries.Value.y == yPos - 1 || entries.Value.y == yPos || entries.Value.y == yPos + 1)
+                                          )
+                                          select entries;
+
+                if (ships_in_paste_area.Count() == 0 && DoesShipFitIntoBounds(xPos, yPos, this_health, rotate))
                 {
-                    bool continued = true;
-                    if (Entry.Value.rotate == 0)
-                    {
-                        for (int y = yPos - 1; continued && y < y + Entry.Value.health; y++)
-                        {
+                    return true;
+                }
+                return false;
+
+
+                //foreach (KeyValuePair<int, ShipInfo> Entry in this)
+                //{
+                //    bool continued = true;
+                //    if (Entry.Value.rotate == 0)
+                //    {
+                //        for (int y = yPos - 1; continued && y < y + Entry.Value.health; y++)
+                //        {
                             
-                            next_line0:
-                            for (int x = xPos - 1; x < x + 1; x++)
-                            {
-                                if (Entry.Value.x != x) continue;
-                                else
-                                {
+                //            next_line0:
+                //            for (int x = xPos - 1; x < x + 1; x++)
+                //            {
+                //                if (Entry.Value.x != x) continue;
+                //                else
+                //                {
                                     
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
+                //                }
+                //            }
+                //        }
+                //    }
+                //    else
+                //    {
 
-                    }
+                //    }
 
-                    //
-                    //
-                    if (Entry.Value.x != xPos)
+                //    //
+                //    //
+                //    if (Entry.Value.x != xPos)
+                //    {
+                //        continue;
+                //    }
+                //    else
+                //    {
+                //        if (Entry.Value.y != yPos)
+                //        {
+                //            continue;
+                //        }
+                //        else
+                //        {
+                //            key = Entry.Key;
+                //            break;
+                //        }
+                //    }
+                //}
+                //return key;
+            }
+
+            public bool DoesShipFitIntoBounds(int xPos, int yPos, byte this_health, byte rotate)
+            {
+                if (rotate == 1) {
+                    if ((xPos >= 0 && xPos <= 9) && (xPos + this_health - 1) >= 0 && (xPos + this_health - 1) <= 9)
                     {
-                        continue;
-                    }
-                    else
-                    {
-                        if (Entry.Value.y != yPos)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            key = Entry.Key;
-                            break;
-                        }
+                        if (yPos >= 0 && yPos <= 9) return true;
                     }
                 }
-                return key;
+                else // rotate -> 0
+                {
+                    if ((yPos >= 0 && yPos <= 9) && (yPos + this_health - 1) >= 0 && (yPos + this_health - 1) <= 9)
+                    {
+                        if (xPos >= 0 && xPos <= 9) return true;
+                    }
+                }
+                return false;
             }
 
             public void DamageShip(int key, int x, int y /* , DataGridView fog_field, Ship instance */)

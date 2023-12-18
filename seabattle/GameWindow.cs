@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ships;
 using shooting;
+using bot;
 
 namespace seabattle
 {
@@ -33,6 +34,8 @@ namespace seabattle
         int[] attackCell = { 0, 0 };
         Shoot shots = new Shoot();
         ShootDict shotHist = new ShootDict();
+
+        Opponent opponent = new Opponent();
         
 
         public GameWindow()
@@ -67,6 +70,8 @@ namespace seabattle
             pictureBox4.Image = btlship1.rotate;
             pictureBox4.Location = new Point(btlship1.controlX, Y);
             btlship_n.Text = btlship1.possibleCount.ToString();
+
+            opponent.PlaceShips();
         }
 
         // picture 1
@@ -381,6 +386,13 @@ namespace seabattle
                     fire.Enabled = false;
                 }
             }
+            actions act = new actions();
+            Opponent.OpponentFleet pairs = opponent.fleetMap;
+            foreach (KeyValuePair<int, ShipInfo> Entry in pairs)
+            {
+                act.PlaceShipBlock(ref attack_field, Entry.Value.x, Entry.Value.y, Entry.Value.health, Entry.Value.rotate);
+            }
+            
         }
 
         private void fire_Click(object sender, EventArgs e)
